@@ -3,40 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=60mm, initial-scale=1.0"> <title>Ticket de Compra</title>
+    <meta name="viewport" content="width=60mm, initial-scale=1.0">
+    <title>Ticket de Compra</title>
     <style>
         body {
             font-family: tahoma, Helvetica, sans-serif;
             margin: 0;
             font-size: 3mm;
-            text-align: center; /* Centrar todo el contenido por defecto */
+            text-align: center; 
         }
 
         #thermal-pos {
-            margin: 0 auto; /* Centrar el contenedor del ticket */
+            margin: 0 auto;
             max-width: 60mm;
         }
         
-        /* --- ESTILOS AÑADIDOS PARA LA IMAGEN --- */
         .logo-container {
-            text-align: left; /* Alinear la imagen a la izquierda */
+            text-align: left;
         }
 
+        /* --- ESTILO MODIFICADO --- */
         .ticket-logo {
-            max-width: 60mm; /* Ancho máximo para la imagen */
-            height: auto;   /* Altura se ajusta automáticamente */
+            max-width: 45mm;
+            height: auto;
+            display: block; /* Elimina el espacio inferior de la imagen */
         }
-        /* --- FIN DE ESTILOS AÑADIDOS --- */
 
         .label {
             margin: 0;
             margin-left: 0.5mm;
         }
 
+        /* --- ESTILO MODIFICADO --- */
+        .info-tienda {
+            margin: 0;
+            padding-top: 0; /* Asegura que no haya espacio superior */
+        }
+
         .table {
             border-collapse: collapse;
             border-spacing: 0;
-            width: 100%; /* Asegura que la tabla use todo el ancho */
+            width: 100%;
         }
 
         .table-header h2 {
@@ -72,7 +79,6 @@
         .nro_boleta,
         .nro_mesa,
         .fecha_recepcion,
-        .info-tienda,
         .m-0,
         .direccion {
             margin: 0;
@@ -155,12 +161,8 @@
     </div>
 
     <script>
-        // --- Tu código Javascript no necesita cambios ---
-
-        // Obtener los parámetros de la URL
+        // --- Tu JavaScript sigue igual ---
         const params = new URLSearchParams(window.location.search);
-
-        // Obtener los valores de los parámetros
         var nro_boleta = params.has('boleta') ? params.get('boleta') : "---";
         var nro_mesa = params.has('mesa') ? params.get('mesa') : "---";
         var direc = params.has('direccion') ? params.get('direccion') : "---";
@@ -175,18 +177,14 @@
         var cantidades = params.has('cantidades') ? params.get('cantidades') : "0";
         var descripciones = params.has('servicios') ? params.get('servicios') : "No hay articulos";
         var p_units = params.has('p_unit') ? params.get('p_unit') : "0.00";
-
-        //Formato de 2 decimales
         propina = parseFloat(propina).toLocaleString('es-ES', { minimumFractionDigits: 0 });
         domi = parseFloat(domi).toLocaleString('es-ES', { minimumFractionDigits: 0 });
         total = parseFloat(total).toLocaleString('es-ES', { minimumFractionDigits: 0 });
         descuento = parseFloat(descuento).toLocaleString('es-ES', { minimumFractionDigits: 0 });
         subtotal_desc = parseFloat(subtotal_desc).toLocaleString('es-ES', { minimumFractionDigits: 0 });
-        
         cantidades = cantidades.split(",");
         descripciones = descripciones.split(",");
         p_units = p_units.split(",");
-
         var result = [];
         cantidades.forEach(function(value, id) {
             result[id] = {
@@ -195,23 +193,16 @@
                 precio_unit: parseFloat(p_units[id]).toLocaleString('es-ES', { minimumFractionDigits: 0 }),
             };
         });
-        
         var tablaBody = document.getElementById("tablaBody");
         result.forEach(function(row) {
             var newRow = document.createElement("tr");
             newRow.className = "table-item";
-            newRow.innerHTML = `
-                <td class="item">${row.cantidad}</td>
-                <td class="item">${row.descripcion}</td>
-                <td class="item">${row.precio_unit}</td>
-            `;
+            newRow.innerHTML = `<td class="item">${row.cantidad}</td><td class="item">${row.descripcion}</td><td class="item">${row.precio_unit}</td>`;
             tablaBody.appendChild(newRow);
         });
-        
         var spaceRow = document.createElement("tr");
         spaceRow.innerHTML = `<td colspan="3">&nbsp;</td>`;
         tablaBody.appendChild(spaceRow);
-
         document.getElementById("nro_boleta_id").textContent = nro_boleta;
         document.getElementById("nro_mesa_id").textContent = nro_mesa;
         document.getElementById("nro_direccion_id").textContent = direc;
@@ -224,9 +215,6 @@
     </script>
 </body>
 </html>
-
-
-
 
 
 
